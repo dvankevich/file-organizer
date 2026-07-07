@@ -1,5 +1,5 @@
 import { Command } from 'commander';
-import { scanDirectory } from './lib/scanner.js';
+import { handleScanCommand } from './lib/scanner.js';
 import { findDuplicates } from './lib/duplicates.js';
 import { organizeFiles } from './lib/organizer.js';
 import { cleanupFiles } from './lib/cleanup.js';
@@ -14,9 +14,7 @@ program
 program
   .command('scan <directory>')
   .description('Scan directory recursively and show detailed statistics')
-  .action((directory) => {
-    scanDirectory(directory);
-  });
+  .action(handleScanCommand);
 
 program
   .command('duplicates <directory>')
