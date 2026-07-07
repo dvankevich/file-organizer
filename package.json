@@ -20,5 +20,8 @@
   "bugs": {
     "url": "https://github.com/dvankevich/file-organizer/issues"
   },
-  "homepage": "https://github.com/dvankevich/file-organizer#readme"
+  "homepage": "https://github.com/dvankevich/file-organizer#readme",
+  "dependencies": {
+    "commander": "^15.0.0"
+  }
 }
