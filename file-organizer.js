@@ -1,4 +1,8 @@
 import { Command } from 'commander';
+import { scanDirectory } from './lib/scanner.js';
+import { findDuplicates } from './lib/duplicates.js';
+import { organizeFiles } from './lib/organizer.js';
+import { cleanupFiles } from './lib/cleanup.js';
 
 const program = new Command();
 
@@ -7,38 +11,34 @@ program
   .description('CLI tool to organize files')
   .version('1.0.0');
 
-// 1. SCAN
 program
   .command('scan <directory>')
-  .description('Scan directory recursively and show detailed statistics (count, sizes, types, age)')
+  .description('Scan directory recursively and show detailed statistics')
   .action((directory) => {
-    // виконати scan
+    scanDirectory(directory);
   });
 
-// 2. DUPLICATES
 program
   .command('duplicates <directory>')
   .description('Find duplicate files with identical content using SHA-256 hashes')
   .action((directory) => {
-    // виконати duplicates
+    findDuplicates(directory);
   });
 
-// 3. ORGANIZE
 program
   .command('organize <directory> <targetDirectory>')
-  .description('Copy and sort files into categories (Documents, Images, Archives, Code, Videos, Other)')
+  .description('Copy and sort files into categories')
   .action((directory, targetDirectory) => {
-    // виконати organize
+    organizeFiles(directory, targetDirectory);
   });
 
-// 4. CLEANUP
 program
   .command('cleanup <directory>')
   .description('Find and delete files older than a specified number of days')
   .requiredOption('-d, --days <number>', 'number of days to keep files')
-  .option('--dry-run', 'preview files to be deleted without actually removing them')
+  .option('--dry-run', 'preview files to be deleted without removing them')
   .action((directory, options) => {
-    // виконати cleanup (використовуйте options.days та options.dryRun)
+    cleanupFiles(directory, options);
   });
 
 program.parse();
