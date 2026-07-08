@@ -1,6 +1,6 @@
 import { Command } from 'commander';
 import { handleScanCommand } from './lib/scanner.js';
-import { findDuplicates } from './lib/duplicates.js';
+import { handleDuplicatesCommand } from './lib/duplicates.js';
 import { organizeFiles } from './lib/organizer.js';
 import { cleanupFiles } from './lib/cleanup.js';
 
@@ -19,9 +19,7 @@ program
 program
   .command('duplicates <directory>')
   .description('Find duplicate files with identical content using SHA-256 hashes')
-  .action((directory) => {
-    findDuplicates(directory);
-  });
+  .action(handleDuplicatesCommand);
 
 program
   .command('organize <directory> <targetDirectory>')
