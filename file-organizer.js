@@ -1,7 +1,7 @@
 import { Command } from 'commander';
 import { handleScanCommand } from './lib/scanner.js';
 import { handleDuplicatesCommand } from './lib/duplicates.js';
-import { organizeFiles } from './lib/organizer.js';
+import { handleOrganizeCommand } from './lib/organizer.js';
 import { cleanupFiles } from './lib/cleanup.js';
 
 const program = new Command();
@@ -22,11 +22,10 @@ program
   .action(handleDuplicatesCommand);
 
 program
-  .command('organize <directory> <targetDirectory>')
-  .description('Copy and sort files into categories')
-  .action((directory, targetDirectory) => {
-    organizeFiles(directory, targetDirectory);
-  });
+  .command('organize <directory>')
+  .requiredOption('-o, --output <directory>', 'target output directory to sort files into')
+  .description('Copy and sort files into categorical directories')
+  .action(handleOrganizeCommand);
 
 program
   .command('cleanup <directory>')
