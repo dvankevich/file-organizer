@@ -2,7 +2,7 @@ import { Command } from 'commander';
 import { handleScanCommand } from './lib/scanner.js';
 import { handleDuplicatesCommand } from './lib/duplicates.js';
 import { handleOrganizeCommand } from './lib/organizer.js';
-import { cleanupFiles } from './lib/cleanup.js';
+import { handleCleanupCommand } from './lib/cleanup.js';
 
 const program = new Command();
 
@@ -29,11 +29,9 @@ program
 
 program
   .command('cleanup <directory>')
-  .description('Find and delete files older than a specified number of days')
-  .requiredOption('-d, --days <number>', 'number of days to keep files')
-  .option('--dry-run', 'preview files to be deleted without removing them')
-  .action((directory, options) => {
-    cleanupFiles(directory, options);
-  });
+  .requiredOption('--older-than <number>', 'minimum age limit threshold of files in days to target')
+  .option('--confirm', 'grant automated execution write permission to permanently purge items')
+  .description('Find and safely clear outdated files based on modification parameters')
+  .action(handleCleanupCommand);
 
 program.parse();
